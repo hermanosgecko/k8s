@@ -3,6 +3,23 @@ entries:
   homarr:
   - apiVersion: v2
     appVersion: 0.15.9
+    created: "2024-12-15T02:06:18.763832409Z"
+    description: A Helm chart to deploy Homarr for Kubernetes
+    digest: 70a563274d8d4c17f63c7f640d88703fd1860908ebdf71415c357e9bdf593731
+    home: https://hermanosgecko.github.io/k8s/charts/homarr
+    keywords:
+    - homarr
+    - dashboard
+    kubeVersion: '>=1.22.0-0'
+    name: homarr
+    sources:
+    - https://github.com/homarr-labs/homarr
+    type: application
+    urls:
+    - homarr-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 0.15.9
     created: "2024-12-15T02:01:24.171998597Z"
     description: A Helm chart to deploy Homarr for Kubernetes
     digest: 272a8d590daafbf68b07741a2439a0c6183d30977f5411ef67c0723cd9a43315
@@ -35,4 +52,4 @@ entries:
     urls:
     - homarr-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-15T02:01:24.172014447Z"
+generated: "2024-12-15T02:06:18.763848299Z"
