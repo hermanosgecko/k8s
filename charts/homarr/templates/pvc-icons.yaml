@@ -1,0 +1,30 @@
+
+{{- if .Values.persistence.icons.enabled -}}
+{{- if not .Values.persistence.icons.existingClaim -}}
+---
+kind: "PersistentVolumeClaim"
+apiVersion: "v1"
+metadata:
+  name: {{ template "homarr.fullname" . }}-icons
+  namespace: {{ .Release.Namespace }}
+  annotations:
+  {{- if .Values.persistence.icons.annotations }}
+  {{ toYaml .Values.persistence.icons.annotations | indent 2 }}  
+  {{ end }}
+  labels:
+    {{- include "homarr.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - {{ default "ReadWriteOnce" .Values.persistence.icons.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.icons.size | quote }}
+  {{- if .Values.persistence.icons.storageClass }}
+  storageClassName: {{ .Values.persistence.icons.storageClass | quote }}
+  {{ end }}
+  {{- if .Values.persistence.icons.selector }}
+  selector:
+{{ toYaml .Values.persistence.icons.selector | indent 4 }}
+  {{ end }}
+{{- end }}
+{{- end }}
