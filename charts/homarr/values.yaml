@@ -39,6 +39,15 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
+env:
+  TZ: "Australia/Melbourne"
+  DISABLE_ANALYTICS: "true"
+
+envSecrets:
+  EXAMPLE_SECRET:
+   key: # key name within the secret
+   name: # name of the secret
+
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
@@ -68,13 +77,6 @@ readinessProbe:
   timeoutSeconds: 3
   periodSeconds: 10
   failureThreshold: 5
-
-#persistence:
-#  enabled: true
-#  size: "10Gi"
-#  annotations: {}
-#  storageClass:
-#  existingClaim:
 
 persistence: 
   data:

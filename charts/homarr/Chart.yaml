@@ -3,7 +3,7 @@ name: homarr
 description: A Helm chart to deploy Homarr for Kubernetes
 home: https://hermanosgecko.github.io/k8s/charts/homarr
 type: application
-version: 0.1.2
+version: 0.1.3
 appVersion: "0.15.9"
 kubeVersion: ">=1.22.0-0"
 keywords:
