@@ -30,7 +30,7 @@ spec:
         paths:
           {{- range .paths }}
           - path: {{ .path | default "/" }}
-            pathType: {{ .pathType | default "prefix"}}
+            pathType: {{ .pathType | default "Prefix"}}
             backend:
               service:
                 name: {{ include "homarr.fullname" $ }}
