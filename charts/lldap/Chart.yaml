@@ -3,7 +3,7 @@ name: lldap
 description: A Helm chart to deploy lldap for Kubernetes
 home: https://hermanosgecko.github.io/k8s/charts/lldap
 type: application
-version: 0.1.1
+version: 0.1.2
 appVersion: "v0.6.1"
 kubeVersion: ">=1.22.0-0"
 keywords:
@@ -14,5 +14,5 @@ sources:
   - https://github.com/lldap/lldap
 dependencies:
   - name: postgresql
-    version: ~17
+    version: ~16
     repository: https://charts.bitnami.com/bitnami
