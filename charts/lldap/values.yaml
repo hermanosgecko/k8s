@@ -24,10 +24,7 @@ postgresql:
     password: "lldap"
     database: "lldap"
     existingSecret: ""
-  primary:
-    persistence:
-      enabled: true
-      storageClass: "nfs-client"
+    existingClaim: ""
 
 envSecrets:
   EXAMPLE_SECRET:
@@ -86,7 +83,7 @@ readinessProbe:
 
 persistence: 
   enabled: true
-  size: "10Gi"
+  size: "100mb"
   annotations: {}
   storageClass:
   existingClaim:
