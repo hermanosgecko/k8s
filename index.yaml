@@ -90,6 +90,28 @@ entries:
   lldap:
   - apiVersion: v2
     appVersion: v0.6.1
+    created: "2024-12-21T06:10:31.485025692Z"
+    dependencies:
+    - name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: ~16
+    description: A Helm chart to deploy lldap for Kubernetes
+    digest: 60f128ec747b2eda4fbea5a1ddc6ce748b2a35b8f25e1a0c3ada99a2da0d3182
+    home: https://hermanosgecko.github.io/k8s/charts/lldap
+    keywords:
+    - lldap
+    - authentication
+    kubeVersion: '>=1.22.0-0'
+    name: lldap
+    sources:
+    - https://github.com/hermanosgecko/k8s
+    - https://github.com/lldap/lldap
+    type: application
+    urls:
+    - lldap-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v2
+    appVersion: v0.6.1
     created: "2024-12-21T06:02:10.418529158Z"
     dependencies:
     - name: postgresql
@@ -132,4 +154,4 @@ entries:
     urls:
     - lldap-0.1.2.tgz
     version: 0.1.2
-generated: "2024-12-21T06:02:10.418550408Z"
+generated: "2024-12-21T06:10:31.485049596Z"
