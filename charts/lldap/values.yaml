@@ -83,7 +83,7 @@ readinessProbe:
 
 persistence: 
   enabled: true
-  size: "100mb"
+  size: "100M"
   annotations: {}
   storageClass:
   existingClaim:
