@@ -1,0 +1,135 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "lldap.fullname" . }}
+  labels:
+    {{- include "lldap.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "lldap.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "lldap.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.http.port }}
+              protocol: TCP
+            - name: ldap
+              containerPort: {{ .Values.service.ldap.port }}
+              protocol: TCP
+            - name: ldaps
+              containerPort: {{ .Values.service.ldaps.port }}
+              protocol: TCP
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
+          env:
+           {{- range $key, $value := .Values.env }}
+           - name: {{ $key }}
+             value: "{{ $value }}"
+           {{- end }}
+           {{- if and (not .Values.env.LLDAP_DATABASE_URL) }}
+           - name: LLDAP_DATABASE_URL
+             valueFrom:
+               secretKeyRef:
+                 name: {{ include "lldap.secretsname" . }}
+                 key: "database-url"
+           {{- end }}
+           {{- if and (not .Values.env.LLDAP_JWT_SECRET) }}
+           - name: LLDAP_JWT_SECRET
+             valueFrom:
+               secretKeyRef:
+                 name: {{ include "lldap.secretsname" . }}
+                 key: "jwt-secret"
+           {{- end }}
+           {{- if and (not .Values.env.LLDAP_KEY_SEED) }}
+           - name: LLDAP_KEY_SEED
+             valueFrom:
+               secretKeyRef:
+                 name: {{ include "lldap.secretsname" . }}
+                 key: "key-seed"
+           {{- end }}
+           {{- if and (not .Values.env.LLDAP_LDAP_USER_DN ) }}
+           - name: LLDAP_LDAP_USER_DN
+             valueFrom:
+               secretKeyRef:
+                 name: {{ include "lldap.secretsname" . }}
+                 key: "ldap-user-dn"
+           {{- end }}
+           {{- if and (not .Values.env.LLDAP_LDAP_USER_PASS ) }}
+           - name: LLDAP_LDAP_USER_PASS
+             valueFrom:
+               secretKeyRef:
+                 name: {{ include "lldap.secretsname" . }}
+                 key: "ldap-user-pass"
+           {{- end }}
+           {{- range $key, $value := .Values.envSecrets }}
+           {{- if (and (ne $value nil) (and (ne $value.key nil) (ne $value.name nil))) }}
+           - name: {{ $key }}
+             valueFrom:
+               secretKeyRef:
+                 key: {{ $value.key }}
+                 name: {{ $value.name }}
+           {{- end }}
+           {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            {{- with .Values.volumeMounts }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
+            {{- if .Values.persistence.enabled }}
+            - name: data
+              mountPath: /data
+            {{- end }}
+      volumes:
+        {{- with .Values.volumes }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- if .Values.persistence.enabled }}
+        - name: "data"
+          persistentVolumeClaim:
+            {{- if .Values.persistence.existingClaim }}
+            claimName: {{ .Values.persistence.existingClaim }}
+            {{- else }}
+            claimName: {{ template "lldap.fullname" . }}
+            {{- end }}
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

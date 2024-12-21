@@ -1,0 +1,118 @@
+replicaCount: 1
+
+image:
+  repository: docker.io/lldap/lldap
+  pullPolicy: IfNotPresent
+  tag: ""
+
+env:
+  TZ: "UTC"
+  LLDAP_LDAP_BASE_DN: "dc=example,dc=com"
+# TODO make this built when generating the deployment  
+#  LLDAP_DATABASE_URL: postgres://postgres:postgres@lldap-postgresql.lldap.svc.cluster.local:5432/postgres
+
+secrets:
+  existingSecret: ""
+  lldapJwtSecret: ""
+  lldapKeySeed: ""
+  lldapUser: "admin"
+  lldapUserPass: "admin"
+
+postgresql:
+  auth:
+    username: "lldap"
+    password: "lldap"
+    database: "lldap"
+    existingSecret: ""
+  primary:
+    persistence:
+      enabled: true
+      storageClass: "nfs-client"
+
+envSecrets:
+  EXAMPLE_SECRET:
+   key: # key name within the secret
+   name: # name of the secret
+
+podAnnotations: {}
+podLabels: {}
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  http:
+    type: ClusterIP
+    port: 17170
+  ldap:
+    type: ClusterIP
+    port: 3890
+  ldaps:
+    type: ClusterIP
+    port: 6360
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 30
+  timeoutSeconds: 3
+  periodSeconds: 10
+  failureThreshold: 5
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 30
+  timeoutSeconds: 3
+  periodSeconds: 10
+  failureThreshold: 5
+
+persistence: 
+  enabled: true
+  size: "10Gi"
+  annotations: {}
+  storageClass:
+  existingClaim:
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# Additional volumes on the output Deployment definition.
+volumes: []
+# - name: foo
+#   secret:
+#     secretName: mysecret
+#     optional: false
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts: []
+# - name: foo
+#   mountPath: "/etc/foo"
+#   readOnly: true
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
