@@ -2,7 +2,7 @@
 {{- if .Values.secrets.existingSecret }}
 {{ .Values.secrets.existingSecret }}
 {{ else }}
-{{- include "lldap.fullname" . }}-secrets
+{{- include "lldap.fullname" . }}
 {{- end }}
 {{- end -}}
 

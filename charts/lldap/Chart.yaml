@@ -3,7 +3,7 @@ name: lldap
 description: A Helm chart to deploy lldap for Kubernetes
 home: https://hermanosgecko.github.io/k8s/charts/lldap
 type: application
-version: 0.1.6
+version: 0.1.7
 appVersion: "v0.6.1"
 kubeVersion: ">=1.22.0-0"
 keywords:
