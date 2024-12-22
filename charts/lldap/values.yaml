@@ -16,7 +16,7 @@ secrets:
   lldapJwtSecret: ""
   lldapKeySeed: ""
   lldapUser: "admin"
-  lldapUserPass: ""
+  lldapUserPass: "password"
 
 postgresql:
   auth:
