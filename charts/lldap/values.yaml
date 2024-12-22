@@ -20,9 +20,8 @@ secrets:
 
 postgresql:
   auth:
-    username: "lldap"
-    password: "lldap"
-    database: "lldap"
+    postgresPassword: "postgres"
+    database: "postgres"
     existingSecret: ""
     existingClaim: ""
 

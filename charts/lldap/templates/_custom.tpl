@@ -7,5 +7,5 @@
 {{- end -}}
 
 {{- define "lldap.postgres_url" -}}
-{{ "postgres://" }}{{ .Values.postgresql.auth.username }}{{":"}}{{ .Values.postgresql.auth.password }}{{ "@lldap-postgresql." }}{{ .Release.Namespace }}.svc.cluster.local:5432/{{ .Values.postgresql.auth.database }}
+{{ "postgres://postgres:"}}{{ .Values.postgresql.auth.postgresPassword }}{{ "@lldap-postgresql." }}{{ .Release.Namespace }}.svc.cluster.local:5432/{{ .Values.postgresql.auth.database }}
 {{- end -}}
