@@ -1,0 +1,17 @@
+apiVersion: v2
+name: sonarr
+description: A Helm chart to deploy sonarr for Kubernetes
+home: https://hermanosgecko.github.io/k8s/charts/sonarr
+type: application
+version: 0.1.0
+appVersion: "4.0.11"
+kubeVersion: ">=1.22.0-0"
+keywords:
+  - sonarr
+sources:
+  - https://github.com/hermanosgecko/k8s
+  - https://github.com/Sonarr/Sonarr
+#dependencies:
+#  - name: postgresql
+#    version: ~17
+#    repository: https://charts.bitnami.com/bitnami
